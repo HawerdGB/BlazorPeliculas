@@ -1,11 +1,15 @@
 @page "/pelicula/{PeliculaId:int}"
-@page "/pelicula/{PeliculaId:int}/{NombrePelicula}"
-
+ @page "/pelicula/{PeliculaId:int}/{NombrePelicula}"
+ 
 <PageTitle>Detalle Pelicula</PageTitle>
 
 <h1>Detalle Pelicula</h1>
 
 @code{
-    [Parameter] public int PeliculaId{get; set;}
-     [Parameter] public string? NombrePelicula{get; set;}
+    [Parameter] public int PeliculaId {get; set;}
+    [Parameter] public string NombrePelicula { get; set; } = null!;
+
+     protected override void OnInitialized(){
+         Console.WriteLine($"PeliculaId: {PeliculaId}");
+        Console.WriteLine($"NombrePelicula: {NombrePelicula}");}
 }

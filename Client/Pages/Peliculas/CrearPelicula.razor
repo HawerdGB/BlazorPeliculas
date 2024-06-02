@@ -1,5 +1,17 @@
 @page "/pelicula/crear"
+@inject NavigationManager navigationManager
 
 <PageTitle>Nueva Pelicula</PageTitle>
 
 <h1>Crear Pelicula</h1>
+
+<button class="btn btn-primary" @onclick="Crear">Salvar Pelicula</button>
+
+@code {
+    private Pelicula Pelicula = new Pelicula();
+
+    private void Crear(){
+        Console.WriteLine($"Titulo de la pelicula :{Pelicula.Titulo}");
+        navigationManager.NavigateTo("pelicula");
+    }
+}

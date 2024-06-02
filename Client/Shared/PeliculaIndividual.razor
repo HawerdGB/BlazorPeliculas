@@ -1,4 +1,4 @@
-<div class="card me-2 shadow p-3 mb-5 bg-body rounded" style="text-align:center">
+ <div class="card me-2  p-3 mb-5 bg-body rounded" style="text-align:center">
      <a href="@urlPelicula">
         <img src="@Pelicula.Poster" alt="poster" style="width:225px; height:300px"/>
      </a>
@@ -10,7 +10,7 @@
     <button type="button" class="btn btn-danger" 
 @onclick="@(() => EliminarPelicula.InvokeAsync(Pelicula))">Borrar</button>
 </div>
-</div>
+</div> 
 
 @code{
     [Parameter]
