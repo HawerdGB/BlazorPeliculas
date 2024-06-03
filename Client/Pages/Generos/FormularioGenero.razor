@@ -1,4 +1,5 @@
-@inject IJSRuntime js
+@inject SweetAlertService swal
+
 
 <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
 <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
@@ -42,7 +43,16 @@
             return;
         }
 
-        var confirmado = await js.Confirm("¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.");
+        // var confirmado = await js.Confirm("¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.");
+
+        var resultado = await swal.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Estás seguro de que quieres salir? Los cambios no guardados se perderán.",
+            Icon = SweetAlertIcon.Warning,
+            ShowCancelButton = true
+        });
+        var confirmado = !string.IsNullOrEmpty(resultado.Value);
 
         if(confirmado)
         {
