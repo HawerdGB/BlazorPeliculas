@@ -3,6 +3,6 @@ namespace BlazorPeliculas.Client.Repositorios
 {
     public interface IRepositorio
     {
-        List<Pelicula> ObternerPeliculas();
+        List<Pelicula> ObtenerPeliculas();
     }
 }

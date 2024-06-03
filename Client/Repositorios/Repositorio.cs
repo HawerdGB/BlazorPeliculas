@@ -4,7 +4,7 @@ namespace BlazorPeliculas.Client.Repositorios
 {
     public class Repositorio : IRepositorio
     {
-        public List<Pelicula> ObternerPeliculas()
+        public List<Pelicula> ObtenerPeliculas()
         {
             return new List<Pelicula>
             {
