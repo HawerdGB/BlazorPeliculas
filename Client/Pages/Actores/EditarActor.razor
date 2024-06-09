@@ -4,6 +4,24 @@
 
 <h1>Editar Actor</h1>
 
+<FormularioActores Actor="Actor" OnValidSubmit="Editar" />
+
 @code{
     [Parameter] public int ActorId{get; set;}
+    Actor Actor = new Actor();
+
+    protected override void OnInitialized()
+    {
+        Actor = new Actor
+            {
+                Id = ActorId,
+                Nombre = "Tom Holland",
+                FechaNacimiento = new DateTime(1996, 6, 1),
+            };
+    }
+
+    void Editar()
+    {
+        Console.WriteLine("Actor editado");
+    }
 }
