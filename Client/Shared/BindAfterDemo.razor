@@ -21,6 +21,6 @@
             };
             await Task.Delay(1000);
 
-            personasEncontradas = personas.Where(p => p.Contains(busqueda)).ToList();
+            personasEncontradas = personas.Where( p => p.Contains(busqueda) ).ToList();
     }
 }

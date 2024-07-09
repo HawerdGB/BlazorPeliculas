@@ -3,13 +3,12 @@ public class Pelicula
 {
     public int Id { get; set; }
     public string Titulo { get; set; }=null!;
-     public string? Poster { get; set; }
-    public string? Genero { get; set; }
-    public string? Director { get; set; }
-    public int Duracion { get; set; }
-    public DateTime FechaLanzamiento { get; set; }
-    public string? Pais { get; set; }
-    public string? Descripcion { get; set; }
+    public string? Resumen { get; set; }
+    public bool EnCartelera { get; set; }
+    public string? Trailer { get; set; }
+    public string? Poster { get; set; }
+    public DateTime? Lanzamiento { get; set; }
+    public List<GeneroPelicula> GenerosPelicula { get; set; } = new List<GeneroPelicula>();
     public string? TituloCortado 
         { 
             get {

@@ -20,7 +20,7 @@
 
       
       private async Task EliminarPelicula(Pelicula pelicula){
-        var confirmado = await js.Confirm($"Desea borrar la pelicula {pelicula.Titulo}?");
+        var confirmado = await js.Confirm($"Desea borrar la pelicula {pelicula.Titulo}?" );
         
         if(confirmado){
         Console.WriteLine("eliminando una pelis");

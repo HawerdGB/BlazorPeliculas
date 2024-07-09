@@ -1,5 +1,4 @@
-﻿﻿@using Markdig
-
+﻿@using Markdig
 
 @if (string.IsNullOrEmpty(ContenidoHTML))
 {
@@ -20,7 +19,7 @@ else
 
     protected override void OnParametersSet()
     {
-        if (ContenidoMarkdown is not null)
+        if (!string.IsNullOrEmpty(ContenidoMarkdown))
         {
             ContenidoHTML = Markdown.ToHtml(ContenidoMarkdown);
         }
