@@ -12,6 +12,7 @@ public class Pelicula
     public string? Poster { get; set; }
     public DateTime? Lanzamiento { get; set; }
     public List<GeneroPelicula> GenerosPelicula { get; set; } = new List<GeneroPelicula>();
+    public List<PeliculaActor> PeliculasActor { get; set; } = new List<PeliculaActor>();
     public string? TituloCortado 
         { 
             get {

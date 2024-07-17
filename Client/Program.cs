@@ -19,7 +19,7 @@ ConfigureServices(builder.Services);
 void ConfigureServices(IServiceCollection services)
 {
  
-   services.AddSingleton<IRepositorio, Repositorio>();
+   services.AddScoped<IRepositorio, Repositorio>();
 }
 
 await builder.Build().RunAsync();

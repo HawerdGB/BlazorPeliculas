@@ -2,8 +2,28 @@
 
 <h3>Indice Generos</h3>
 
+<ul>
+    @foreach (var genero in Generos)
+    {
+        <li>@genero</li>
+    }
+</ul>
+
 <div class="mb-3">
     <a href="generos/crear" class="btn btn-info">Agregar</a>
 </div>
 
-@code{}
+@code {
+    List<string> Generos { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Generos = GetGeneros();
+    }
+
+    List<string> GetGeneros()
+    {
+        // Code to retrieve the list of Generos from the database or any other source
+        return new List<string> { "Accion", "Comedia", "Drama" };
+    }
+}

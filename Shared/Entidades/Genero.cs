@@ -10,6 +10,6 @@ public class Genero
         public string? Descripcion { get; set; }
 
     // Propiedad de navegación para la relación con la entidad Pelicula
-    // public List<Pelicula>? Peliculas { get; set; }
+     public List<GeneroPelicula>? GenerosPeliculas { get; set; }
 }
 }
