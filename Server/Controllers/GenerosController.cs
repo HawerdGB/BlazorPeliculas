@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorPeliculas.Server.Controllers
 {
-    [Route ("api/generos")]
+    [Route ("api/[controller]")]
     [ApiController]
-    public class GenerosController : Controller
+    public class GenerosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         public GenerosController(ApplicationDbContext context)
@@ -16,6 +16,7 @@ namespace BlazorPeliculas.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> Post(Genero genero)
         {
+          
             _context.Add(genero);
             await _context.SaveChangesAsync();
             return genero.Id;

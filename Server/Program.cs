@@ -1,4 +1,5 @@
 using BlazorPeliculas.Server;
+using BlazorPeliculas.Server.Helpers;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,13 +11,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("name=DefaultConnection"));
+//En caso de querer guardarlo en Azure Storage
+//builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosAzStorage>();
+builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseWebAssemblyDebugging();
+    app.UseWebAssemblyDebugging(); 
 }
 else
 {
