@@ -1,29 +1,47 @@
 @page "/generos"
+@inject IRepositorio repositorio
 
 <h3>Indice Generos</h3>
 
-<ul>
-    @foreach (var genero in Generos)
-    {
-        <li>@genero</li>
-    }
-</ul>
 
 <div class="mb-3">
     <a href="generos/crear" class="btn btn-info">Agregar</a>
 </div>
-
+<ListadoGenerico Listado="Generos">
+    <HayRegistrosCompleto>
+      <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Generos!)
+            {
+                <tr>
+                        <td>
+                            @item.Nombre
+                        </td>
+                    <td>
+                        <a class="btn btn-success">Editar</a>
+                        <a class="btn btn-danger">Borrar</a>
+                    </td>
+                  
+                </tr>
+            }
+        </tbody>
+        </table>
+    </HayRegistrosCompleto>
+</ListadoGenerico>
 @code {
-    List<string>? Generos { get; set; }
+    List<Genero>? Generos { get; set; }
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        Generos = GetGeneros();
+       var respuestaHTTP = await repositorio.Get<List<Genero>>("api/generos");
+       Generos = respuestaHTTP.Response;
     }
 
-    List<string> GetGeneros()
-    {
-        // Code to retrieve the list of Generos from the database or any other source
-        return new List<string> { "Accion", "Comedia", "Drama" };
-    }
+   
 }

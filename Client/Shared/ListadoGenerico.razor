@@ -13,10 +13,19 @@
     }else{
         @NoHayRegistros
     }
-}else{
+}else
+
+{
+    @if (HayRegistros is not null){
     @foreach (var elemento in Listado){
         @HayRegistros(elemento)
 }
+    }else
+    {
+      
+            @HayRegistrosCompleto
+        
+    }
 }
 
 @code{
@@ -26,6 +35,8 @@ public RenderFragment Cargando {get; set;}=null!;
 public RenderFragment NoHayRegistros {get; set;}=null!;
 [Parameter]
 public RenderFragment<Titem> HayRegistros {get; set;}=null!;
+    [Parameter]
+    public RenderFragment HayRegistrosCompleto { get; set; } = null!;
 
 [Parameter]
 [EditorRequired]

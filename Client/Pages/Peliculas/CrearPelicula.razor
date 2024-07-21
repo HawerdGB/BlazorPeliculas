@@ -1,5 +1,7 @@
 @page "/peliculas/crear"
 @inject NavigationManager navigationManager
+@inject IRepositorio repositorio
+@inject SweetAlertService swal
 
 <FormularioPeliculas Pelicula="Pelicula" OnValidSubmit="Crear"
     GenerosNoSeleccionados="GenerosNoSeleccionados"> 
@@ -23,8 +25,19 @@
        };
     }
 
-    private void Crear(){
-        Console.WriteLine($"Titulo de la pelicula :{Pelicula.Titulo}");
-        navigationManager.NavigateTo("pelicula");
+     async Task Crear()
+    {
+       var httpResponse = await repositorio.Post<Pelicula, int>("api/peliculas", Pelicula);
+
+        if (httpResponse.Error)
+        {
+            var mensajeError = await httpResponse.ObtenerMensajeError();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            var peliculaId = httpResponse.Response;
+            navigationManager.NavigateTo($"/pelicula/{peliculaId}/{Pelicula.Titulo.Replace(" ","-")}");
+        }
     }
 }
