@@ -50,7 +50,7 @@
             return;
         }
 
-        if (!item.Equals(itemArrastrado))
+        if (!item!.Equals(itemArrastrado))
         {
             var indiceElementoArrastrado = ElementosSeleccionados.IndexOf(itemArrastrado);
             var indiceElemento = ElementosSeleccionados.IndexOf(item);

@@ -2,6 +2,7 @@
 using BlazorPeliculas.Shared.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorPeliculas.Server.Controllers
 {
@@ -17,6 +18,11 @@ namespace BlazorPeliculas.Server.Controllers
         {
             _context = context;
             _almacenadorArchivos = almacenadorArchivos;
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Actor>>> Get()
+        {
+            return await _context.Actores.ToListAsync();
         }
 
         [HttpPost]
