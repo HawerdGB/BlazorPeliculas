@@ -1,15 +1,66 @@
 @page "/pelicula/{PeliculaId:int}"
  @page "/pelicula/{PeliculaId:int}/{NombrePelicula}"
- 
+ @inject IRepositorio repositorio
+ @inject SweetAlertService swal
+
 <PageTitle>Detalle Pelicula</PageTitle>
 
-<h1>Detalle Pelicula</h1>
+
+@if (modelo == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <h3>@modelo.Pelicula.Titulo (@modelo.Pelicula.Lanzamiento!.Value.ToString("yyyy"))</h3>
+
+    foreach (var genero in modelo.Generos)
+    {
+        <a class="me-2 badge bg-primary rounded-pill text-decoration-none" href="peliculas/buscar?generoid=@genero.Id">@genero.Nombre</a>
+    }
+
+   <span>| @modelo.Pelicula.Lanzamiento.Value.ToString("dd MMM yyyy")
+         | Promedio: @modelo.PromedioVotos.ToString("0.#")/5
+         | Tu Voto: @modelo.VotoUsuario.ToString();
+   </span>
+   <div class="d-flex mt-2">
+       <span style="display: inline-block;" class="me-2">
+           <img src="@modelo.Pelicula.Poster" alt="poster" style="width:225px; height:315px" />
+       </span>
+        @if (string.IsNullOrEmpty(modelo.Pelicula.Trailer))
+        {
+            <span>No hay trailer disponible</span>
+        }else
+        {
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/@modelo.Pelicula.Trailer?si=BPfA044ATeLN8jcc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          }
+       </div>
+   <div class="mt-2">
+              <h4>Resumen</h4>
+       <div>
+            <MostrarMarkdown ContenidoMarkdown="@modelo.Pelicula.Resumen" />
+       </div>
+   </div>
+
+}
 
 @code{
     [Parameter] public int PeliculaId {get; set;}
     [Parameter] public string NombrePelicula { get; set; } = null!;
+    private PeliculaVisualizarDTO? modelo;
 
-     protected override void OnInitialized(){
-         Console.WriteLine($"PeliculaId: {PeliculaId}");
-        Console.WriteLine($"NombrePelicula: {NombrePelicula}");}
+    protected override async Task  OnInitializedAsync()
+    {
+        var respuestaHTTP = await repositorio.Get<PeliculaVisualizarDTO>($"api/peliculas/{PeliculaId}");
+            
+        if(respuestaHTTP.Error)
+        {
+            var mensajeError = await respuestaHTTP.ObtenerMensajeError();
+            await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        }
+        else
+        {
+            modelo = respuestaHTTP.Response;
+        }
+    }
 }

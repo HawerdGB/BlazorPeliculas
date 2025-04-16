@@ -18,7 +18,7 @@ namespace BlazorPeliculas.Client.Repositorios
         public async Task<string> ObtenerMensajeError()
         {
             if (!Error)
-            { return null; }
+            { return null!; }
 
             var codigoEstatus = HttpResponseMessage.StatusCode;
 
