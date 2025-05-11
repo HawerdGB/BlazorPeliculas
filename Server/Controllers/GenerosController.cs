@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlazorPeliculas.Server.Controllers
 {
-    [Route ("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class GenerosController : ControllerBase
     {
@@ -20,6 +20,17 @@ namespace BlazorPeliculas.Server.Controllers
             return await _context.Generos.ToListAsync();
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Genero>> Get(int id)
+        {
+            var genero = await _context.Generos.FirstOrDefaultAsync(x => x.Id == id);
+            if (genero is null)
+            {
+                return NotFound();
+            }
+            return genero;
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<int>> Post(Genero genero)
@@ -28,6 +39,14 @@ namespace BlazorPeliculas.Server.Controllers
             _context.Add(genero);
             await _context.SaveChangesAsync();
             return genero.Id;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Genero genero) 
+        {
+            _context.Update(genero);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
 
     }

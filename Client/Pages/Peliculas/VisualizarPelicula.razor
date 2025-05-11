@@ -19,28 +19,42 @@ else
         <a class="me-2 badge bg-primary rounded-pill text-decoration-none" href="peliculas/buscar?generoid=@genero.Id">@genero.Nombre</a>
     }
 
-   <span>| @modelo.Pelicula.Lanzamiento.Value.ToString("dd MMM yyyy")
-         | Promedio: @modelo.PromedioVotos.ToString("0.#")/5
-         | Tu Voto: @modelo.VotoUsuario.ToString();
-   </span>
-   <div class="d-flex mt-2">
-       <span style="display: inline-block;" class="me-2">
-           <img src="@modelo.Pelicula.Poster" alt="poster" style="width:225px; height:315px" />
-       </span>
+    <span>| @modelo.Pelicula.Lanzamiento.Value.ToString("dd MMM yyyy")
+        | Promedio: @modelo.PromedioVotos.ToString("0.#")/5
+        | Tu Voto: @modelo.VotoUsuario.ToString();
+    </span>
+    <div class="d-flex mt-2">
+        <span style="display: inline-block;" class="me-2">
+            <img src="@modelo.Pelicula.Poster" alt="poster" style="width:225px; height:315px" />
+        </span>
         @if (string.IsNullOrEmpty(modelo.Pelicula.Trailer))
         {
             <span>No hay trailer disponible</span>
         }else
         {
-        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/@modelo.Pelicula.Trailer?si=BPfA044ATeLN8jcc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          }
-       </div>
-   <div class="mt-2">
-              <h4>Resumen</h4>
-       <div>
+            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/@modelo.Pelicula.Trailer?si=BPfA044ATeLN8jcc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        }
+    </div>
+    <div class="mt-2">
+        <h4>Resumen</h4>
+        <div>
             <MostrarMarkdown ContenidoMarkdown="@modelo.Pelicula.Resumen" />
-       </div>
-   </div>
+        </div>
+    </div>
+    <div class="mt-2">
+        <h3>Actores</h3>
+        <div class="d-flex flex-column">
+            @foreach (var actor in modelo.Actores)
+            {
+                <div class="mb-2">
+                    <img style="width:50px;" src="@actor.Foto"/>
+                    <span style="display: inline-block; width: 200px">@actor.Nombre</span>
+                    <span style="display: inline-block; width: 45px">...</span>
+                    <span>@actor.Personaje</span>
+                </div>
+            }
+        </div>
+    </div>
 
 }
 
