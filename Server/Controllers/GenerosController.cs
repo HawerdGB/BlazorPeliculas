@@ -35,19 +35,30 @@ namespace BlazorPeliculas.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> Post(Genero genero)
         {
-          
+
             _context.Add(genero);
             await _context.SaveChangesAsync();
             return genero.Id;
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(Genero genero) 
+        public async Task<ActionResult> Put(Genero genero)
         {
             _context.Update(genero);
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filasAfectadas = await _context.Generos.Where(x => x.Id == id).ExecuteDeleteAsync();
+            if (filasAfectadas == 0)
+            {
+                return NotFound();
+            }
+           return NoContent();
+
+        }
     }
 }

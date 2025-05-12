@@ -50,6 +50,11 @@ namespace BlazorPeliculas.Client.Repositorios
             return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
         }
 
+        public async Task<HttpResponseWrapper<Object>> Delete(string url)
+        {
+            var responseHttp = await httpClient.DeleteAsync(url);
+            return new HttpResponseWrapper<object>(null, !responseHttp.IsSuccessStatusCode, responseHttp);
+        }
 
         public async Task<HttpResponseWrapper<TResponse>> Post<T, TResponse>(string url, T enviar)
         {
