@@ -1,5 +1,8 @@
 @page "/actores"
 @inject IRepositorio repositorio
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
+
 
 <h3>Indice Actores</h3>
 
@@ -23,7 +26,10 @@
 
                         <td>
                             <a href="actores/editar/@item.Id" class="btn btn-success">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            <button class="btn btn-danger"
+                                    @onclick=@(() => Borrar(item))>
+                                Borrar
+                            </button>
                         </td>
                         <td>
                             @item.Nombre
@@ -39,7 +45,35 @@
 
     protected async override Task OnInitializedAsync()
     {
+        await Cargar();
+    }
+
+    private async Task Cargar()
+    {
         var respuestaHTTP = await repositorio.Get<List<Actor>>("api/actores");
         Actores = respuestaHTTP.Response;
+    }
+
+    private async Task Borrar(Actor actor)
+    {
+        var respuestaHTTP = await repositorio.Delete($"api/actores/{actor.Id}");
+
+        if (respuestaHTTP.Error)
+        {
+            if (respuestaHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("actores");
+            }
+            else
+            {
+                var mensajeError = await respuestaHTTP.ObtenerMensajeError();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Cargar();
+        }
+
     }
 }
