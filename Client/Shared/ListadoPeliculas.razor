@@ -1,4 +1,6 @@
      @inject IJSRuntime js
+@inject IRepositorio repositorio
+@inject SweetAlertService swal
 
 
      <div style="display:flex; flex-wrap:wrap; align-items: center;" >
@@ -23,9 +25,23 @@
         var confirmado = await js.Confirm($"Desea borrar la pelicula {pelicula.Titulo}?" );
         
         if(confirmado){
-        Console.WriteLine("eliminando una pelis");
-        Peliculas.Remove(pelicula);}
+        {
+            var respuestaHTTP = await repositorio.Delete($"api/peliculas/{pelicula.Id}");
+
+                if (respuestaHTTP.Error)
+                {
+                    
+                        var mensajeError = await respuestaHTTP.ObtenerMensajeError();
+                        await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+                    
+                }else
+                {
+                    Peliculas.Remove(pelicula);
+                }
+                       
+       }
       }
   
     }
 
+    }
