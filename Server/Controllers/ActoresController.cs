@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlazorPeliculas.Server.Helpers;
+using BlazorPeliculas.Shared.DTOs;
 using BlazorPeliculas.Shared.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,11 @@ namespace BlazorPeliculas.Server.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> Get()
+        public async Task<ActionResult<IEnumerable<Actor>>> Get([FromQuery] PaginacionDTO paginacion)
         {
-            return await _context.Actores.ToListAsync();
+            var queryable = _context.Actores.AsQueryable();
+            await HttpContext.InsertarParametrosPaginacionEnRespuesta(queryable, paginacion.CantidadRegistros);
+            return await queryable.OrderBy(x => x.Nombre).Paginar(paginacion).ToListAsync();
         }
 
         [HttpGet("{id:int}")]

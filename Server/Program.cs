@@ -34,6 +34,14 @@ else
     app.UseHsts();
 }
 
+
+// Middleware para eliminar el header Permissions-Policy
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Remove("Permissions-Policy");
+    await next();
+});
+
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();

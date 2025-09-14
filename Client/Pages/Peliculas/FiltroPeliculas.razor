@@ -34,10 +34,16 @@
         </div>
     </div>
 
-      <div class="col-12">
-          <button class="btn btn-primary" @onclick="CargarNuevasPeliculas">Filtrar</button>
-          <button class="btn btn-danger" @onclick="LimpiarFiltros">Limpiar Filtros</button>
-      </div> 
+      <div class="col-12 d-flex gap-2">
+          <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" style="min-width: 110px;" @onclick="CargarNuevasPeliculas">
+              <i class="bi bi-funnel"></i>
+              <span class="d-none d-md-inline">Filtrar</span>
+          </button>
+          <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" style="min-width: 110px;" @onclick="LimpiarFiltros">
+              <i class="bi bi-x-circle"></i>
+              <span class="d-none d-md-inline">Limpiar</span>
+          </button>
+      </div>
 </div>
 <ListadoPeliculas Peliculas="Peliculas" />
 @code {
