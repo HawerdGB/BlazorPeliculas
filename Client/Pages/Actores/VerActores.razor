@@ -9,6 +9,11 @@
 <div class="mb-3">
     <a href="actores/crear" class="btn btn-info">Crear Actor</a>
 </div>
+
+
+<Paginacion PaginaActual="paginaActual" PaginasTotales="paginasTotales" PaginaSeleccionada="PaginaSeleccionada" />
+
+
 <ListadoGenerico Listado="Actores">
     <HayRegistrosCompleto>
         <table class="table table-striped">
@@ -42,16 +47,30 @@
 </ListadoGenerico>
 @code{
    public List<Actor>? Actores { get; set; }
+    private int paginaActual = 1;
+    private int paginasTotales;
+    private async Task paginaSeleccionada(int pagina)
+    {
+        paginaActual = pagina;
+        await Cargar(pagina);
+    }
 
     protected async override Task OnInitializedAsync()
     {
         await Cargar();
     }
 
-    private async Task Cargar()
+    private async Task PaginaSeleccionada(int pagina)
     {
-        var respuestaHTTP = await repositorio.Get<List<Actor>>("api/actores");
+        paginaActual = pagina;
+        await Cargar(pagina);
+    }
+
+    private async Task Cargar(int pagina = 1)
+    {
+    var respuestaHTTP = await repositorio.Get<List<Actor>>($"api/actores?pagina={pagina}");
         Actores = respuestaHTTP.Response;
+        paginasTotales = int.Parse(respuestaHTTP.HttpResponseMessage.Headers.GetValues("totalPaginas").FirstOrDefault() ?? "1");
     }
 
     private async Task Borrar(Actor actor)
