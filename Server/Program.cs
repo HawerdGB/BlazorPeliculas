@@ -18,7 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddAutoMapper(typeof(Program));
+// AutoMapper extension overloads can differ entre versiones; pasar una lambda vacía
+// y la asamblea del marcador de tipo evita el error "no se puede convertir System.Type a Action<...>".
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly);
 
 var app = builder.Build();
 

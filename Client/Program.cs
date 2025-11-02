@@ -9,17 +9,19 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSweetAlert2();
+//builder.Services.AddSweetAlert2();
 
 ConfigureServices(builder.Services);
 
 
-
+await builder.Build().RunAsync();
 
 void ConfigureServices(IServiceCollection services)
 {
- 
-   services.AddScoped<IRepositorio, Repositorio>();
+    services.AddSweetAlert2();
+   
+    services.AddScoped<IRepositorio, Repositorio>();
+    services.AddAuthorizationCore();
 }
 
-await builder.Build().RunAsync();
+
