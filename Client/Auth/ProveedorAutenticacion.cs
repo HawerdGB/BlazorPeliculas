@@ -13,7 +13,7 @@ namespace BlazorPeliculas.Client.Auth
             var userHawerd = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, "Hawerd"),
-                new Claim(ClaimTypes.Role,"adminq")
+                new Claim(ClaimTypes.Role,"admin")
             },
                 authenticationType:"admin");
 
