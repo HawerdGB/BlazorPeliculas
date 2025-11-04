@@ -2,6 +2,21 @@
 @inject IRepositorio repositorio
 
 <PageTitle>Blazor Peliculas</PageTitle>
+
+<AuthorizeView Roles="admin">
+    <Authorized>
+        <div class="alert alert-info">
+            <strong>Bienvenido!</strong> Has iniciado sesión @context.User.Identity.Name
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="alert alert-warning">
+            <strong>Hola Invitado!</strong> Por favor, inicia sesión para acceder a más funciones.
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+
 <div>
     <h3>En Cartelera</h3>
    <ListadoPeliculas Peliculas="EnCartelera"/>

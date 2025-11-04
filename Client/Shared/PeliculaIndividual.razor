@@ -17,6 +17,9 @@
                 <a class="btn btn-link p-0" style="font-size:0.95rem;" href="@GetUrlPelicula()">Ver más</a>
             }
         }
+
+        <AuthorizeView Roles="admin">
+                 
         <div class="mt-auto d-flex justify-content-between gap-2">
             <a class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" title="Editar" href="/peliculas/editar/@Pelicula.Id">
                 <i class="bi bi-pencil-square"></i>
@@ -27,6 +30,8 @@
                 <span class="d-none d-md-inline">Borrar</span>
             </button>
         </div>
+
+        </AuthorizeView>
     </div>
 </div>
 
